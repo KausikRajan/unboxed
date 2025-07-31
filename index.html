@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNBOXED - Premium Board Games Delivered to Your Doorstep</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for elements Tailwind can't handle */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-1 { animation-delay: 0s; }
+        .floating-2 { animation-delay: 1s; }
+        .floating-3 { animation-delay: 2s; }
+        .floating-4 { animation-delay: 3s; }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #dc2626, #f87171);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-gradient-bg {
+            background: linear-gradient(135deg, #1f2937, #111827, #000000);
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .modal {
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9);
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+        
+        .game-card {
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: #dc2626;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 nav-blur bg-black/80">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold gradient-text">UNBOXED</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="hover:text-red-500 transition">Home</a>
+                <a href="#games" class="hover:text-red-500 transition">Games</a>
+                <a href="#how-it-works" class="hover:text-red-500 transition">How It Works</a>
+                <a href="#book-now" class="hover:text-red-500 transition">Book Now</a>
+                <a href="#about" class="hover:text-red-500 transition">About</a>
+            </div>
+            <button class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 flex items-center justify-center">
+            <span class="floating floating-1 text-6xl md:text-8xl opacity-20">🎲</span>
+            <span class="floating floating-2 text-6xl md:text-8xl opacity-20 ml-20 mt-20">🎮</span>
+            <span class="floating floating-3 text-6xl md:text-8xl opacity-20 mr-20 mb-20">🃏</span>
+            <span class="floating floating-4 text-6xl md:text-8xl opacity-20 ml-40">🏆</span>
+        </div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 gradient-text">UNBOXED</h1>
+            <p class="text-xl md:text-2xl mb-8">Premium Board Games Delivered to Your Doorstep</p>
+            <a href="#games" class="inline-block bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg">
+                Start Playing Today
+            </a>
+        </div>
+    </section>
+
+    <!-- Games Gallery -->
+    <section id="games" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Game Collection</h2>
+            
+            <div class="mb-8 max-w-2xl mx-auto">
+                <input type="text" id="gameSearch" placeholder="Search games..." class="w-full bg-gray-800 border border-gray-700 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-red-500">
+            </div>
+            
+            <div id="gameContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Games will be inserted here by JavaScript -->
+            </div>
+            
+            <div class="text-center mt-8">
+                <button id="showMoreBtn" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-full transition">
+                    Show More Games
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-16 bg-black">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+            
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="bg-red-600 rounded-full h-10 w-10 flex items-center justify-center text-white font-bold mr-4">1</div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Choose Your Games</h3>
+                                <p class="text-gray-300">Browse our curated collection and select the games you want to play.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-red-600 rounded-full h-10 w-10 flex items-center justify-center text-white font-bold mr-4">2</div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Select Duration</h3>
+                                <p class="text-gray-300">Choose how long you want to keep the games (daily or weekly rental).</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-red-600 rounded-full h-10 w-10 flex items-center justify-center text-white font-bold mr-4">3</div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Security Deposit</h3>
+                                <p class="text-gray-300">Pay a fully refundable deposit to ensure the safe return of our games.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-red-600 rounded-full h-10 w-10 flex items-center justify-center text-white font-bold mr-4">4</div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Delivery & Pickup</h3>
+                                <p class="text-gray-300">We'll deliver the games to your doorstep and pick them up when you're done.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-red-600 rounded-full h-10 w-10 flex items-center justify-center text-white font-bold mr-4">5</div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Return & Refund</h3>
+                                <p class="text-gray-300">After we verify the games are complete, we'll refund your deposit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 bg-gray-900 rounded-xl overflow-hidden">
+                    <div class="aspect-w-16 aspect-h-9 relative">
+                        <div class="absolute inset-0 bg-gray-800 flex items-center justify-center">
+                            <button class="bg-red-600 hover:bg-red-700 text-white rounded-full p-4 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="How it works video" class="w-full h-full object-cover opacity-70">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="book-now" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4 max-w-2xl">
+            <h2 class="text-3xl font-bold text-center mb-12">Book Your Games</h2>
+            
+            <form id="bookingForm" class="space-y-6 bg-gray-800 p-8 rounded-xl">
+                <div>
+                    <label for="game" class="block mb-2 font-medium">Select Game</label>
+                    <select id="game" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="">Choose a game...</option>
+                        <!-- Options will be inserted by JavaScript -->
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="duration" class="block mb-2 font-medium">Rental Duration</label>
+                    <select id="duration" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="1">1 Day</option>
+                        <option value="2">2 Days</option>
+                        <option value="7">1 Week</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="name" class="block mb-2 font-medium">Your Name</label>
+                    <input type="text" id="name" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                </div>
+                
+                <div>
+                    <label for="phone" class="block mb-2 font-medium">Phone Number</label>
+                    <input type="tel" id="phone" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                </div>
+                
+                <div>
+                    <label for="address" class="block mb-2 font-medium">Delivery Address</label>
+                    <textarea id="address" rows="3" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-red-500" required></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                    Book Now
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-black">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">About UNBOXED</h2>
+            
+            <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">
+                UNBOXED is Chennai's premier board game rental service, bringing the joy of tabletop gaming to your doorstep. 
+                We believe everyone should have access to premium board games without the commitment of purchasing. 
+                Our carefully curated collection features the best modern and classic games for all ages and skill levels.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-gray-900 p-6 rounded-xl text-center">
+                    <div class="text-4xl mb-4">🚚</div>
+                    <h3 class="text-xl font-bold mb-2">Free Delivery</h3>
+                    <p class="text-gray-300">Chennai delivery with minimal charges for your convenience.</p>
+                </div>
+                
+                <div class="bg-gray-900 p-6 rounded-xl text-center">
+                    <div class="text-4xl mb-4">🛡️</div>
+                    <h3 class="text-xl font-bold mb-2">Safe & Secure</h3>
+                    <p class="text-gray-300">Sanitized games with completeness check before every rental.</p>
+                </div>
+                
+                <div class="bg-gray-900 p-6 rounded-xl text-center">
+                    <div class="text-4xl mb-4">💰</div>
+                    <h3 class="text-xl font-bold mb-2">Affordable Pricing</h3>
+                    <p class="text-gray-300">Fraction of purchase cost to enjoy premium games.</p>
+                </div>
+                
+                <div class="bg-gray-900 p-6 rounded-xl text-center">
+                    <div class="text-4xl mb-4">🎮</div>
+                    <h3 class="text-xl font-bold mb-2">Curated Collection</h3>
+                    <p class="text-gray-300">Hand-picked selection of the best board games available.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="text-2xl font-bold gradient-text mb-4">UNBOXED</div>
+            <p class="text-gray-400 mb-6">Premium Board Games Delivered to Your Doorstep</p>
+            
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-gray-400 hover:text-white transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <p class="text-gray-500 text-sm">© 2023 UNBOXED. All rights reserved. Chennai, Tamil Nadu.</p>
+        </div>
+    </footer>
+
+    <!-- Game Details Modal -->
+    <div id="gameModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 modal">
+        <div class="bg-gray-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h3 id="modalGameTitle" class="text-2xl font-bold"></h3>
+                        <p id="modalGamePrice" class="text-gray-400"></p>
+                    </div>
+                    <button id="closeModal" class="text-gray-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <div id="modalGameIcon" class="text-8xl mb-4 text-center"></div>
+                        <div class="space-y-2">
+                            <p id="modalGamePlayers" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                                <span></span>
+                            </p>
+                            <p id="modalGameDuration" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span></span>
+                            </p>
+                            <p id="modalGameDeposit" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span></span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-2">Description</h4>
+                        <p id="modalGameDescription" class="text-gray-300 mb-4"></p>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button id="rentGameBtn" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                        Rent This Game
+                    </button>
+                    <button id="viewTutorialBtn" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg transition">
+                        📚 View Tutorial
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorialModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 modal">
+        <div class="bg-gray-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h3 id="tutorialGameTitle" class="text-2xl font-bold"></h3>
+                        <div id="tutorialGameIcon" class="text-4xl mt-2"></div>
+                    </div>
+                    <button id="closeTutorialModal" class="text-gray-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="mb-8">
+                    <h4 class="font-bold text-xl mb-4">How to Play</h4>
+                    <div id="tutorialContent" class="text-gray-300 space-y-4"></div>
+                </div>
+                
+                <div class="mb-8">
+                    <h4 class="font-bold text-xl mb-4">Video Tutorial</h4>
+                    <div class="aspect-w-16 aspect-h-9 bg-gray-800 rounded-lg flex items-center justify-center">
+                        <div class="text-center p-8">
+                            <div class="text-4xl mb-4">🎥</div>
+                            <p class="text-gray-400">Video tutorial coming soon!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="backToGameBtn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg transition">
+                    ← Back to Game Details
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 modal">
+        <div class="bg-gray-900 rounded-xl max-w-md w-full p-8 text-center">
+            <div class="text-green-500 text-6xl mb-4">✓</div>
+            <h3 class="text-2xl font-bold mb-4">Booking Successful!</h3>
+            <p class="text-gray-300 mb-6">We'll contact you shortly to confirm your delivery details. Get ready for some fun!</p>
+            <button id="closeSuccessModal" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                Awesome!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Game Data
+        const games = [
+            {
+                id: 1,
+                title: "Monopoly Classic",
+                price: "₹400/day",
+                icon: "🏠",
+                players: "2-8 players",
+                duration: "60-180 min",
+                deposit: "₹2000 deposit",
+                description: "The classic real estate trading game where players buy, sell, and trade properties to build monopolies and bankrupt opponents.",
+                tutorial: [
+                    "Objective: Be the last player remaining after all others have gone bankrupt.",
+                    "Gameplay: Roll dice to move around the board. Buy unowned properties you land on.",
+                    "Building: Once you own all properties in a color group, you can build houses and hotels.",
+                    "Rent: Other players must pay rent when they land on your properties.",
+                    "Special Spaces: Chance and Community Chest cards can help or hinder your progress.",
+                    "Bankruptcy: If you can't pay what you owe, you're out of the game."
+                ]
+            },
+            {
+                id: 2,
+                title: "Settlers of Catan",
+                price: "₹600/day",
+                icon: "🏝️",
+                players: "3-4 players",
+                duration: "60-90 min",
+                deposit: "₹3000 deposit",
+                description: "A strategy game where players collect resources and build roads, settlements, and cities on the island of Catan.",
+                tutorial: [
+                    "Objective: Be the first to reach 10 victory points.",
+                    "Setup: The island is made of hexagonal terrain tiles that produce different resources.",
+                    "Resources: Collect brick, lumber, wool, grain, and ore based on dice rolls and your settlements.",
+                    "Building: Spend resources to build roads, settlements (1 VP), and cities (2 VP).",
+                    "Trading: Negotiate with other players to get the resources you need.",
+                    "Development Cards: These can give you special abilities or victory points.",
+                    "Robber: When a 7 is rolled, the robber can be placed to block resource production."
+                ]
+            },
+            {
+                id: 3,
+                title: "Scrabble",
+                price: "₹300/day",
+                icon: "📝",
+                players: "2-4 players",
+                duration: "30-60 min",
+                deposit: "₹1500 deposit",
+                description: "The classic word game where players score points by forming words from individual lettered tiles on a game board.",
+                tutorial: [
+                    "Objective: Score the most points by forming words on the board.",
+                    "Setup: Each player draws 7 letter tiles to start.",
+                    "Gameplay: On your turn, form a new word or add to existing words on the board.",
+                    "Scoring: Each letter has a point value, and premium squares multiply letter or word scores.",
+                    "Exchanging: You may exchange some or all of your tiles instead of playing a word.",
+                    "Challenge: If a word is challenged and not in the dictionary, the player loses their turn.",
+                    "End Game: When all tiles have been drawn and one player uses their last tile, or all possible plays have been made."
+                ]
+            },
+            {
+                id: 4,
+                title: "Ticket to Ride",
+                price: "₹500/day",
+                icon: "🚂",
+                players: "2-5 players",
+                duration: "30-60 min",
+                deposit: "₹2500 deposit",
+                description: "A railway-themed board game where players collect cards of various types of train cars and use them to claim railway routes.",
+                tutorial: [
+                    "Objective: Score the most points by completing routes and building the longest continuous railway.",
+                    "Setup: Each player receives 45 colored train cars and 3 destination tickets (keep at least 2).",
+                    "Gameplay: On your turn, either draw train cards, claim a route, or draw additional destination tickets.",
+                    "Claiming Routes: Spend train cards matching the color and number of spaces in a route to claim it with your trains.",
+                    "Destination Tickets: These give bonus points for connecting two distant cities, but subtract points if incomplete.",
+                    "Longest Route: The player with the longest continuous path of trains gets 10 bonus points.",
+                    "End Game: When a player has 2 or fewer trains left, each player gets one final turn."
+                ]
+            },
+            {
+                id: 5,
+                title: "Azul",
+                price: "₹450/day",
+                icon: "🎨",
+                players: "2-4 players",
+                duration: "30-45 min",
+                deposit: "₹2200 deposit",
+                description: "A tile-placement game where players compete to create the most beautiful tiled wall by carefully drafting tiles from central factories.",
+                tutorial: [
+                    "Objective: Score the most points by strategically placing colored tiles on your player board.",
+                    "Setup: Place factory displays in the center and fill them with 4 random tiles each.",
+                    "Drafting: On your turn, choose all tiles of one color from one factory or the center.",
+                    "Placing: Place the tiles on one row of your pattern lines (must match the row's color).",
+                    "Scoring: When you complete a row, one tile moves to your wall and scores points immediately and in future rounds.",
+                    "Wall Rules: Each row and column must have unique colors; no duplicates.",
+                    "End Game: The round when at least one player completes a horizontal line of 5 consecutive tiles on their wall."
+                ]
+            },
+            {
+                id: 6,
+                title: "Codenames",
+                price: "₹350/day",
+                icon: "🕵️",
+                players: "4-8 players",
+                duration: "15-30 min",
+                deposit: "₹1800 deposit",
+                description: "A word-based party game where two teams compete to identify all of their agents first by giving one-word clues.",
+                tutorial: [
+                    "Objective: Be the first team to correctly identify all your team's agents.",
+                    "Setup: 25 word cards are laid out in a 5×5 grid. Each team has a spymaster who knows which words belong to which team.",
+                    "Gameplay: Spymasters give one-word clues that may relate to multiple words on the board, followed by a number indicating how many words relate to that clue.",
+                    "Guessing: Team members try to guess words of their color, stopping whenever they want.",
+                    "Special Rules: The black card is the assassin - guessing this means instant loss. Civilians are neutral.",
+                    "Turn End: A turn ends after a wrong guess or after the team has made all their guesses (up to clue number +1).",
+                    "Winning: First team to identify all their agents wins, or if the assassin is guessed."
+                ]
+            },
+            {
+                id: 7,
+                title: "Wingspan",
+                price: "₹700/day",
+                icon: "🦅",
+                players: "1-5 players",
+                duration: "40-70 min",
+                deposit: "₹3500 deposit",
+                description: "A competitive bird-collection, engine-building board game where players attract birds to their wildlife preserves.",
+                tutorial: [
+                    "Objective: Score the most points by attracting birds to your habitats and completing objectives.",
+                    "Habitats: Forest (gain food), Grassland (lay eggs), Wetland (draw cards).",
+                    "Gameplay: On your turn, place an action cube on one of your habitats to take that action.",
+                    "Birds: Each bird has a food cost, habitat requirement, and special ability when activated.",
+                    "Food: Gather food tokens to pay for birds (fish, rodent, fruit, invertebrate, seed).",
+                    "Eggs: Used to play birds or score points at game end.",
+                    "End Game: After 4 rounds (each with decreasing turns), score points from birds, eggs, cached food, completed objectives, and bonus cards."
+                ]
+            },
+            {
+                id: 8,
+                title: "Splendor",
+                price: "₹400/day",
+                icon: "💎",
+                players: "2-4 players",
+                duration: "30 min",
+                deposit: "₹2000 deposit",
+                description: "A fast-paced game of chip-collecting and card development where players compete to build Renaissance jewelry businesses.",
+                tutorial: [
+                    "Objective: Be the first to reach 15 prestige points by purchasing development cards and attracting nobles.",
+                    "Resources: Collect chips (diamonds, sapphires, emeralds, rubies, onyx) to buy cards.",
+                    "Gameplay: On your turn, take chips (3 different or 2 same), buy a card, or reserve a card.",
+                    "Cards: Provide permanent gem bonuses and prestige points. Higher level cards cost more.",
+                    "Nobles: Visiting nobles give bonus prestige points if you meet their development requirements.",
+                    "Reserving: Lets you hold a card for later purchase and gives you a gold chip (wild resource).",
+                    "Winning: When a player reaches 15 points during their turn, complete the round so all players have equal turns."
+                ]
+            },
+            {
+                id: 9,
+                title: "7 Wonders",
+                price: "₹550/day",
+                icon: "🏛️",
+                players: "2-7 players",
+                duration: "30 min",
+                deposit: "₹2750 deposit",
+                description: "A card drafting game where players develop ancient civilizations by gathering resources, developing commercial routes, and building architectural wonders.",
+                tutorial: [
+                    "Objective: Score the most points through military, science, guilds, and building your wonder.",
+                    "Ages: The game takes place over 3 ages (rounds), each with increasingly powerful cards.",
+                    "Drafting: Each age, players receive a hand of cards, pick one to play, then pass the rest.",
+                    "Actions: Play a card to your tableau (paying resources), discard for coins, or use to build your wonder.",
+                    "Conflict: At the end of each age, compare military strength with neighbors to gain or lose points.",
+                    "Science: Collect sets of different symbols for increasing point values.",
+                    "Final Scoring: Points come from military, treasury, civilian structures, scientific structures, commercial structures, and guilds."
+                ]
+            },
+            {
+                id: 10,
+                title: "King of Tokyo",
+                price: "₹450/day",
+                icon: "🦖",
+                players: "2-6 players",
+                duration: "20-30 min",
+                deposit: "₹2250 deposit",
+                description: "A dice-rolling, monster-battling game where players take on the roles of mutant monsters, gigantic robots, and strange aliens battling in Tokyo.",
+                tutorial: [
+                    "Objective: Be the first to collect 20 victory points or be the last monster standing.",
+                    "Gameplay: Roll 6 dice up to 3 times, keeping what you want between rolls.",
+                    "Dice Results: 1-2-3 = Victory Points, Lightning = Energy, Heart = Heal, Claw = Attack.",
+                    "Tokyo: The monster in Tokyo gains VP but can't heal and must attack all others.",
+                    "Attacking: When in Tokyo, you attack all other monsters. When outside, you attack Tokyo's occupant.",
+                    "Energy: Spend energy to buy power cards that give special abilities.",
+                    "Elimination: If a monster's health reaches 0, they're eliminated. Last monster standing wins."
+                ]
+            }
+        ];
+
+        // DOM Elements
+        const gameContainer = document.getElementById('gameContainer');
+        const gameSearch = document.getElementById('gameSearch');
+        const showMoreBtn = document.getElementById('showMoreBtn');
+        const gameModal = document.getElementById('gameModal');
+        const closeModal = document.getElementById('closeModal');
+        const tutorialModal = document.getElementById('tutorialModal');
+        const closeTutorialModal = document.getElementById('closeTutorialModal');
+        const backToGameBtn = document.getElementById('backToGameBtn');
+        const viewTutorialBtn = document.getElementById('viewTutorialBtn');
+        const rentGameBtn = document.getElementById('rentGameBtn');
+        const bookingForm = document.getElementById('bookingForm');
+        const gameSelect = document.getElementById('game');
+        const successModal = document.getElementById('successModal');
+        const closeSuccessModal = document.getElementById('closeSuccessModal');
+
+        // Variables
+        let visibleGames = 6;
+        let currentGame = null;
+
+        // Initialize
+        function init() {
+            renderGames();
+            setupEventListeners();
+            populateGameSelect();
+        }
+
+        // Render Games
+        function renderGames(filter = '') {
+            gameContainer.innerHTML = '';
+            
+            const filteredGames = games.filter(game => 
+                game.title.toLowerCase().includes(filter.toLowerCase())
+            );
+            
+            const gamesToShow = filter ? filteredGames : filteredGames.slice(0, visibleGames);
+            
+            if (gamesToShow.length === 0) {
+                gameContainer.innerHTML = '<p class="text-center col-span-3 py-12 text-gray-400">No games found matching your search.</p>';
+                return;
+            }
+            
+            gamesToShow.forEach(game => {
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card bg-gray-800 border border-gray-700 rounded-xl p-6 flex flex-col items-center transition';
+                
+                gameCard.innerHTML = `
+                    <div class="text-8xl mb-4">${game.icon}</div>
+                    <h3 class="text-xl font-bold mb-2 text-center">${game.title}</h3>
+                    <p class="text-red-500 font-medium mb-4">${game.price}</p>
+                    <div class="text-sm text-gray-400 space-y-1 mb-6 w-full">
+                        <p class="flex justify-between"><span>Players:</span> <span class="text-gray-300">${game.players}</span></p>
+                        <p class="flex justify-between"><span>Duration:</span> <span class="text-gray-300">${game.duration}</span></p>
+                        <p class="flex justify-between"><span>Deposit:</span> <span class="text-gray-300">${game.deposit}</span></p>
+                    </div>
+                    <div class="flex space-x-3 w-full">
+                        <button data-id="${game.id}" class="view-details-btn flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                            View Details & Rent
+                        </button>
+                        <button data-id="${game.id}" class="view-tutorial-btn bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                            📚 Tutorial
+                        </button>
+                    </div>
+                `;
+                
+                gameContainer.appendChild(gameCard);
+            });
+            
+            // Show/hide "Show More" button
+            if (filter || visibleGames >= games.length) {
+                showMoreBtn.style.display = 'none';
+            } else {
+                showMoreBtn.style.display = 'block';
+            }
+        }
+
+        // Populate game select in booking form
+        function populateGameSelect() {
+            games.forEach(game => {
+                const option = document.createElement('option');
+                option.value = game.id;
+                option.textContent = game.title;
+                gameSelect.appendChild(option);
+            });
+        }
+
+        // Show Game Modal
+        function showGameModal(gameId) {
+            currentGame = games.find(game => game.id === gameId);
+            
+            document.getElementById('modalGameTitle').textContent = currentGame.title;
+            document.getElementById('modalGamePrice').textContent = currentGame.price;
+            document.getElementById('modalGameIcon').textContent = currentGame.icon;
+            document.getElementById('modalGamePlayers').querySelector('span').textContent = currentGame.players;
+            document.getElementById('modalGameDuration').querySelector('span').textContent = currentGame.duration;
+            document.getElementById('modalGameDeposit').querySelector('span').textContent = currentGame.deposit;
+            document.getElementById('modalGameDescription').textContent = currentGame.description;
+            
+            gameModal.classList.add('active');
+        }
+
+        // Show Tutorial Modal
+        function showTutorialModal(gameId) {
+            currentGame = games.find(game => game.id === gameId);
+            
+            document.getElementById('tutorialGameTitle').textContent = currentGame.title;
+            document.getElementById('tutorialGameIcon').textContent = currentGame.icon;
+            
+            const tutorialContent = document.getElementById('tutorialContent');
+            tutorialContent.innerHTML = '';
+            
+            currentGame.tutorial.forEach(item => {
+                const p = document.createElement('p');
+                p.className = 'flex items-start';
+                p.innerHTML = `
+                    <span class="bg-red-600 rounded-full h-6 w-6 flex-shrink-0 flex items-center justify-center text-white text-sm mr-3 mt-1">✓</span>
+                    <span>${item}</span>
+                `;
+                tutorialContent.appendChild(p);
+            });
+            
+            gameModal.classList.remove('active');
+            tutorialModal.classList.add('active');
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Search functionality
+            gameSearch.addEventListener('input', (e) => {
+                renderGames(e.target.value);
+            });
+            
+            // Show more games
+            showMoreBtn.addEventListener('click', () => {
+                visibleGames += 4;
+                if (visibleGames >= games.length) {
+                    visibleGames = games.length;
+                    showMoreBtn.style.display = 'none';
+                }
+                renderGames();
+            });
+            
+            // Game card clicks (delegated)
+            gameContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('view-details-btn')) {
+                    showGameModal(parseInt(e.target.dataset.id));
+                }
+                
+                if (e.target.classList.contains('view-tutorial-btn')) {
+                    showTutorialModal(parseInt(e.target.dataset.id));
+                }
+            });
+            
+            // Modal controls
+            closeModal.addEventListener('click', () => {
+                gameModal.classList.remove('active');
+            });
+            
+            closeTutorialModal.addEventListener('click', () => {
+                tutorialModal.classList.remove('active');
+            });
+            
+            backToGameBtn.addEventListener('click', () => {
+                tutorialModal.classList.remove('active');
+                gameModal.classList.add('active');
+            });
+            
+            viewTutorialBtn.addEventListener('click', () => {
+                showTutorialModal(currentGame.id);
+            });
+            
+            rentGameBtn.addEventListener('click', () => {
+                gameModal.classList.remove('active');
+                document.getElementById('book-now').scrollIntoView({ behavior: 'smooth' });
+                gameSelect.value = currentGame.id;
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === gameModal) {
+                    gameModal.classList.remove('active');
+                }
+                if (e.target === tutorialModal) {
+                    tutorialModal.classList.remove('active');
+                }
+                if (e.target === successModal) {
+                    successModal.classList.remove('active');
+                }
+            });
+            
+            // Booking form submission
+            bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Simple validation
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                
+                if (!name || !phone || !address) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                // In a real app, you would send this data to a server
+                console.log('Booking submitted:', {
+                    game: gameSelect.value,
+                    duration: document.getElementById('duration').value,
+                    name,
+                    phone,
+                    address
+                });
+                
+                // Show success modal
+                successModal.classList.add('active');
+            });
+            
+            // Close success modal
+            closeSuccessModal.addEventListener('click', () => {
+                successModal.classList.remove('active');
+            });
+            
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Mobile menu toggle (would need additional CSS)
+            document.querySelector('.md\\:hidden').addEventListener('click', () => {
+                // This would require additional CSS for a mobile menu
+                alert('Mobile menu would open here with proper implementation.');
+            });
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
